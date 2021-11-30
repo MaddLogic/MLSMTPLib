@@ -5,7 +5,10 @@ namespace MLSMTPLib
 {
     public interface IMessageContent
     {
-        public Guid MessageId { get;}
+        Guid MessageId { get;}
         AttachmentCollection Attachments { get; set; }
+
+        string Subject { get; set; }
+        string Body { get; set; }
     }
 }

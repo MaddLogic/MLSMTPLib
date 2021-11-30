@@ -27,7 +27,7 @@ namespace MLSMTPLib
             var msg = new MLSMTPMessage<SimpleContent>()
             {
                 Content = new SimpleContent(),
-                MessageTemplate = new SimpleMailTemplate()
+                MessageTemplate = new StringMessage()
             };
 
             return new MLSMTPSendMessageSenderStatus()

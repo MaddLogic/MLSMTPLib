@@ -2,7 +2,7 @@
 
 namespace MLSMTPLib
 {
-    public class SimpleMailTemplate: IMLSMTPMessageTemplate<SimpleContent>
+    public class StringMessage: IMLSMTPMessageTemplate<SimpleContent>
     {
         public string GetSubject(SimpleContent content)
         {

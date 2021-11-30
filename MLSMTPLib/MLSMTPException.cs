@@ -8,11 +8,11 @@ namespace MLSMTPLib
         {
         }
 
-        public MLSMTPException(MLSMTPSendMessageSenderStatus mlsmtpSenderStatus, string? message) : base(message)
+        public MLSMTPException(MLSMTPSendMessageSenderStatus mlsmtpSenderStatus, string message) : base(message)
         {
         }
 
-        public MLSMTPException(MLSMTPSendMessageSenderStatus mlsmtpSenderStatus, string? message, Exception? innerException) : base(message, innerException)
+        public MLSMTPException(MLSMTPSendMessageSenderStatus mlsmtpSenderStatus, string message, Exception innerException = null) : base(message, innerException)
         {
         }
 
