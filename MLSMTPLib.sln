@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31313.79
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLSMTPLib", "ClassLibrary1\MLSMTPLib.csproj", "{A8428127-F12F-472F-AC50-421BF517A75A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MLSMTPLib", "MLSMTPLib\MLSMTPLib.csproj", "{A8428127-F12F-472F-AC50-421BF517A75A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
