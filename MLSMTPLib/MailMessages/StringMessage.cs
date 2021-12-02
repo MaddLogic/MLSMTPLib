@@ -6,12 +6,12 @@ namespace MLSMTPLib
     {
         public string GetSubject(SimpleContent content)
         {
-            throw new System.NotImplementedException();
+            return content.Subject;
         }
 
         public string GetBody(SimpleContent content)
         {
-            throw new System.NotImplementedException();
+            return content.Body;
         }
 
         public bool IsHtml { get; } = false;
