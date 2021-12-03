@@ -1,8 +1,6 @@
-﻿using System.Net.Mail;
-
-namespace MLSMTPLib
+﻿namespace MaddLogic.MLSMTPLib.MailMessages
 {
-    public class StringMessage: IMLSMTPMessageTemplate<SimpleContent>
+    public class StringMessage: ISMTPMessageTemplate<SimpleContent>
     {
         public string GetSubject(SimpleContent content)
         {

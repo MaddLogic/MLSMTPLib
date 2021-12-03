@@ -1,6 +1,6 @@
-﻿namespace MLSMTPLib
+﻿namespace MaddLogic.MLSMTPLib.MailMessages
 {
-    public class HTMLMessage: IMLSMTPMessageTemplate<HTMLContent>
+    public class HTMLMessage: ISMTPMessageTemplate<HTMLContent>
     {
         private readonly bool _isHtml = true;
         private readonly bool _canHaveAttachments = true;

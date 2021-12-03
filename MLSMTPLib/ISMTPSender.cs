@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 
-namespace MLSMTPLib
+namespace MaddLogic.MLSMTPLib
 {
     public interface ISMTPSender
     {
-        MLSMTPSendMessageSenderStatus SendMessage(MLSMTPRecipient recipient, string subject, string message, MLSMTPMailFrom from);
+        SMTPSendMessageSenderStatus SendMessage(SMTPRecipient recipient, string subject, string message, SMTPMailFrom from);
 
-        MLSMTPSendMessageSenderStatus SendMessage<T>(MLSMTPRecipient recipient, MLSMTPMessage<T> message, MLSMTPMailFrom from) where T : IMessageContent;
+        SMTPSendMessageSenderStatus SendMessage<T>(SMTPRecipient recipient, SMTPMessage<T> message, SMTPMailFrom from) where T : IMessageContent;
 
-        SMTPSendMessagesSenderStatus SendMessage<T>(IList<MLSMTPRecipient> recepients, MLSMTPMessage<T> message, MLSMTPMailFrom from) where T : IMessageContent;
+        SMTPSendMessagesSenderStatus SendMessage<T>(IList<SMTPRecipient> recepients, SMTPMessage<T> message, SMTPMailFrom from) where T : IMessageContent;
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Net.Mail;
+using MaddLogic.MLSMTPLib;
 
 namespace MLSMTPLib.Tests
 {
-    public class MLSMTPSenderConfiguration: IMLSMTPConfiguration
+    public class SMTPSenderConfiguration: ISMTPConfiguration
     {
         public string SMTPIP { get; set; } = "smtp.sendgrid.net";
         public int SMTPPort { get; set; } = 587;

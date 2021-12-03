@@ -3,58 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Xml.Schema;
+using MaddLogic.MLSMTPLib.MailMessages;
 using Microsoft.Extensions.Logging;
 
-namespace MLSMTPLib
+namespace MaddLogic.MLSMTPLib
 {
-    public class MLSMTPSender : ISMTPSender
+    public class SMTPSender : ISMTPSender
     {
-        private readonly IMLSMTPConfiguration _configuration;
-        private readonly ILogger<MLSMTPSender> _logger;
+        private readonly ISMTPConfiguration _configuration;
+        private readonly ILogger<SMTPSender> _logger;
 
-        public MLSMTPSender(IMLSMTPConfiguration configuration, ILogger<MLSMTPSender> _logger)
+        public SMTPSender(ISMTPConfiguration configuration, ILogger<SMTPSender> _logger)
         {
             _configuration = configuration;
             this._logger = _logger;
         }
 
-        public MLSMTPSendMessageSenderStatus SendMessage(
-            MLSMTPRecipient recipient,
+        public SMTPSendMessageSenderStatus SendMessage(
+            SMTPRecipient recipient,
             string subject,
             string message,
-            MLSMTPMailFrom from)
+            SMTPMailFrom from)
         {
-            var msg = new MLSMTPMessage<SimpleContent>()
+            var msg = new SMTPMessage<SimpleContent>()
             {
                 Content = new SimpleContent(),
                 MessageTemplate = new StringMessage()
             };
 
-            return new MLSMTPSendMessageSenderStatus()
+            return new SMTPSendMessageSenderStatus()
             {
                 MessageStatus = DoSendMessage(new[] {recipient}, msg, from).messageStatusList.First()
             };
         }
 
-        public MLSMTPSendMessageSenderStatus SendMessage<T>(MLSMTPRecipient recipient, MLSMTPMessage<T> message, MLSMTPMailFrom @from) where T : IMessageContent
+        public SMTPSendMessageSenderStatus SendMessage<T>(SMTPRecipient recipient, SMTPMessage<T> message, SMTPMailFrom @from) where T : IMessageContent
         {
-            return new MLSMTPSendMessageSenderStatus()
+            return new SMTPSendMessageSenderStatus()
             {
                 MessageStatus = DoSendMessage(new[] {recipient}, message, from).messageStatusList.First()
             };
         }
 
-        public SMTPSendMessagesSenderStatus SendMessage<T>(IList<MLSMTPRecipient> recepients, MLSMTPMessage<T> message, MLSMTPMailFrom from) where T : IMessageContent
+        public SMTPSendMessagesSenderStatus SendMessage<T>(IList<SMTPRecipient> recepients, SMTPMessage<T> message, SMTPMailFrom from) where T : IMessageContent
         {
             return DoSendMessage(recepients.ToArray(), message, from);
         }
 
 
         private SMTPSendMessagesSenderStatus DoSendMessage<T> (
-            MLSMTPRecipient[] recipients,
-            MLSMTPMessage<T> message,
-            MLSMTPMailFrom from) where T : IMessageContent
+            SMTPRecipient[] recipients,
+            SMTPMessage<T> message,
+            SMTPMailFrom from) where T : IMessageContent
         {
             SmtpClient client = new SmtpClient(_configuration.SMTPIP, _configuration.SMTPPort);
             SMTPSendMessagesSenderStatus sendStatus = new SMTPSendMessagesSenderStatus();

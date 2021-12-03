@@ -1,8 +1,8 @@
 ﻿using System.Net.Mail;
 
-namespace MLSMTPLib
+namespace MaddLogic.MLSMTPLib
 {
-    public interface IMLSMTPConfiguration
+    public interface ISMTPConfiguration
     {
         string SMTPIP { get; set; }
         int SMTPPort { get; set; }

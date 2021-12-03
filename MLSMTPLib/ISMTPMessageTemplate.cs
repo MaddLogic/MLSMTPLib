@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace MLSMTPLib
+﻿namespace MaddLogic.MLSMTPLib
 {
-    public interface IMLSMTPMessageTemplate<T> where T:IMessageContent
+    public interface ISMTPMessageTemplate<T> where T:IMessageContent
     {
         string GetSubject(T content);
         string GetBody(T content);
