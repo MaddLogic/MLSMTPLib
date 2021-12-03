@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Xml.Schema;
 using Microsoft.Extensions.Logging;
@@ -55,11 +56,12 @@ namespace MLSMTPLib
             MLSMTPMessage<T> message,
             MLSMTPMailFrom from) where T : IMessageContent
         {
-            SmtpClient client = new SmtpClient(_configuration.SMTPIP);
+            SmtpClient client = new SmtpClient(_configuration.SMTPIP, _configuration.SMTPPort);
             SMTPSendMessagesSenderStatus sendStatus = new SMTPSendMessagesSenderStatus();
-            client.Port = _configuration.SMTPPort;
             client.DeliveryMethod = _configuration.DeliveryMethod;
             client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential(_configuration.SMTPUsername, _configuration.SMTPPassword);
+            client.EnableSsl = _configuration.EnableSsl;
             foreach (var mlsmtpRecipient in recipients)
             {
 
@@ -94,9 +96,13 @@ namespace MLSMTPLib
 
                     if (message.MessageTemplate.CanHaveAttachments)
                     {
-                        foreach (var attachment in message.GetAttachments().ToList())
+                        var attachments = message.GetAttachments();
+                        if (attachments != null)
                         {
-                            mail.Attachments.Add(attachment);
+                            foreach (var attachment in attachments.ToList())
+                            {
+                                mail.Attachments.Add(attachment);
+                            }
                         }
                     }
 
