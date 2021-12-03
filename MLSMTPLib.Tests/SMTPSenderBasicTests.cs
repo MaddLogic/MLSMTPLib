@@ -80,7 +80,7 @@ namespace MLSMTPLib.Tests
         {
                 
             SmtpClient smtpClient = new SmtpClient("smtp.sendgrid.net", 587);
-            smtpClient.Credentials = new System.Net.NetworkCredential("apikey", "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");
+            smtpClient.Credentials = new System.Net.NetworkCredential("apikey", "SG._Y4WN7W4BRtWn_ag1-kNJDA.2XbhTf05Y76uvN7k_LsKx5weLi3dlAWzMQzXdM0D3KQ_");
             // smtpClient.UseDefaultCredentials = true; // uncomment if you don't want to use the network credentials
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtpClient.EnableSsl = false;
