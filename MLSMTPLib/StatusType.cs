@@ -1,4 +1,4 @@
-﻿namespace MLSMTPLib
+﻿namespace MaddLogic.MLSMTPLib
 {
     public enum StatusType
     {

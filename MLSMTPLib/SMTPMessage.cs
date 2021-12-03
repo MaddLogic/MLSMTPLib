@@ -1,11 +1,11 @@
 ﻿using System.Net.Mail;
 
-namespace MLSMTPLib
+namespace MaddLogic.MLSMTPLib
 {
-    public struct MLSMTPMessage<T> where T:IMessageContent
+    public struct SMTPMessage<T> where T:IMessageContent
     {
         public T  Content{ get; set;}
-        public IMLSMTPMessageTemplate<T> MessageTemplate { get; set; }
+        public ISMTPMessageTemplate<T> MessageTemplate { get; set; }
 
         public string GetSubject()
         {

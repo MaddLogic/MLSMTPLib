@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Mail;
 
-namespace MLSMTPLib
+namespace MaddLogic.MLSMTPLib
 {
     public interface IMessageContent
     {

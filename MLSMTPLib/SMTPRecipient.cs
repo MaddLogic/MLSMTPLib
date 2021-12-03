@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace MLSMTPLib
+namespace MaddLogic.MLSMTPLib
 {
-    public class MLSMTPRecipient
+    public class SMTPRecipient
     {
         public IList<string> To { get; set; } = new List<string>();
         public IList<string> Cc { get; set; } = new List<string>();

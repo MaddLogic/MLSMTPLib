@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Net.Mail;
+using MaddLogic.MLSMTPLib;
+using MaddLogic.MLSMTPLib.MailMessages;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,33 +11,33 @@ namespace MLSMTPLib.Tests
     [TestClass]
     public class SMTPSenderBasicTests
     {
-        private MLSMTPMailFrom _mlsmtpMailFrom;
-        private MLSMTPRecipient _mlsmtpRecipient;
+        private SMTPMailFrom _smtpMailFrom;
+        private SMTPRecipient _smtpRecipient;
         private ISMTPSender _sender;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            this._mlsmtpMailFrom = new MLSMTPMailFrom()
+            this._smtpMailFrom = new SMTPMailFrom()
             {
                 Name = "Migration Auto Mailer",
                 Address = "marjone@maddlogic.com"
             };
 
-            this._mlsmtpRecipient = new MLSMTPRecipient()
+            this._smtpRecipient = new SMTPRecipient()
             {
                 To = new List<string>(){"marjonerey@gmail.com"}
             };
             
-            _sender = new MLSMTPSender(new MLSMTPSenderConfiguration(), new Logger<MLSMTPSender>(new NullLoggerFactory()));
+            _sender = new SMTPSender(new SMTPSenderConfiguration(), new Logger<SMTPSender>(new NullLoggerFactory()));
         }
 
         [TestMethod]
         public void SendStringMEssageTest()
         {
             var send = _sender.SendMessage(
-                _mlsmtpRecipient,
-                new MLSMTPMessage<SimpleContent>()
+                _smtpRecipient,
+                new SMTPMessage<SimpleContent>()
                 {
                     Content = new SimpleContent()
                     {
@@ -44,7 +46,7 @@ namespace MLSMTPLib.Tests
                     },
                     MessageTemplate = new StringMessage()
                 },
-                _mlsmtpMailFrom
+                _smtpMailFrom
             );
            
             Assert.IsNull(send.MessageStatus.Message);
@@ -55,8 +57,8 @@ namespace MLSMTPLib.Tests
         public void SendHtmlMessage()
         {
            var send = _sender.SendMessage(
-                _mlsmtpRecipient,
-                new MLSMTPMessage<HTMLContent>()
+                _smtpRecipient,
+                new SMTPMessage<HTMLContent>()
                 {
                     Content = new HTMLContent()
                     {
@@ -66,7 +68,7 @@ namespace MLSMTPLib.Tests
                     },
                     MessageTemplate = new HTMLMessage()
                 },
-                _mlsmtpMailFrom
+                _smtpMailFrom
             );
            
            Assert.IsNull(send.MessageStatus.Message);

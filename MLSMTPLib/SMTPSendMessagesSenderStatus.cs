@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MLSMTPLib
+namespace MaddLogic.MLSMTPLib
 {
     public class SMTPSendMessagesSenderStatus
     {
