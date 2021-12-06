@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
+using HtmlAgilityPack;
 using MaddLogic.MLSMTPLib;
 using MaddLogic.MLSMTPLib.MailMessages;
 using Microsoft.Extensions.Logging;
@@ -93,5 +96,38 @@ namespace MLSMTPLib.Tests
 
             smtpClient.Send(mail);
         }
+
+        [TestMethod]
+        public void ValidateHTML()
+        {
+            string html = "<span>Hello world</sspan>";
+
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(html);
+
+            bool Error = doc.ParseErrors.Count() > 0;
+
+            Assert.IsFalse(Error);
+        }
+
+        [TestMethod]
+        public void ValidateEmailAddress()
+        {
+            bool valid = false;
+            try
+            {
+                MailAddress m = new MailAddress("HELLO WORLD");
+
+                valid = true;
+            }
+            catch (FormatException)
+            {
+                valid = false;
+            }
+            
+            Assert.IsTrue(valid);
+        }
+        
+        
     }
 }
