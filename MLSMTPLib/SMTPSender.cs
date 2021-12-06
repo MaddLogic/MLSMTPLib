@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using HtmlAgilityPack;
 using MaddLogic.MLSMTPLib.MailMessages;
 using Microsoft.Extensions.Logging;
 
@@ -50,6 +51,28 @@ namespace MaddLogic.MLSMTPLib
             return DoSendMessage(recepients.ToArray(), message, from);
         }
 
+        private bool IsValidEmailAdress(string email)
+        {
+            if (email.Trim().EndsWith(".")) {
+                return false; 
+            }
+            try {
+                var addr = new MailAddress(email);
+                return addr.Address == email;
+            }
+            catch {
+                return false;
+            }
+        }
+
+        private bool isValidHTML(string content)
+        {
+
+            HtmlDocument doc = new HtmlDocument();
+            doc.LoadHtml(content);
+
+            return doc.ParseErrors.Count() > 0;
+        }
 
         private SMTPSendMessagesSenderStatus DoSendMessage<T> (
             SMTPRecipient[] recipients,
@@ -77,22 +100,33 @@ namespace MaddLogic.MLSMTPLib
 
                     foreach (var to in mlsmtpRecipient.To)
                     {
+                        if (!IsValidEmailAdress(to)) continue;
                         mail.To.Add(new MailAddress(to));
                     }
 
                     foreach (var cc in mlsmtpRecipient.Cc)
                     {
+                        if (!IsValidEmailAdress(cc)) continue;
                         mail.CC.Add(new MailAddress(cc));
                     }
 
                     foreach (var cc in mlsmtpRecipient.Bcc)
                     {
+                        if (!IsValidEmailAdress(cc)) continue;
                         mail.Bcc.Add(new MailAddress(cc));
                     }
 
+                    var body = message.GetBody();
+                    var isHTML = message.MessageTemplate.IsHtml;
+
+                    if (isHTML && !isValidHTML(body))
+                    {
+                        throw new Exception("Invalid HTML body.");
+                    }
+                    
                     mail.Subject = message.GetSubject();
-                    mail.Body = message.GetBody();
-                    mail.IsBodyHtml = message.MessageTemplate.IsHtml;
+                    mail.Body = body;
+                    mail.IsBodyHtml = isHTML;
 
                     if (message.MessageTemplate.CanHaveAttachments)
                     {
@@ -123,7 +157,8 @@ namespace MaddLogic.MLSMTPLib
                         new MessageStatus()
                         {
                             Type = StatusType.ERROR,
-                            MessageIdentifier = message.Content.MessageId
+                            MessageIdentifier = message.Content.MessageId,
+                            Message = e.Message
                         }
                     );
                 }

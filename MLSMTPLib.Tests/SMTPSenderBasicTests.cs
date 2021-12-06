@@ -79,6 +79,50 @@ namespace MLSMTPLib.Tests
         }
 
         [TestMethod]
+        public void TestSendInvalidHtml()
+        {
+            var send = _sender.SendMessage(
+                _smtpRecipient,
+                new SMTPMessage<HTMLContent>()
+                {
+                    Content = new HTMLContent()
+                    {
+                        Body = "<h1>Body</hh1>",
+                        Subject = "Subject"
+                    },
+                    MessageTemplate = new HTMLMessage()
+                },
+                _smtpMailFrom
+            );
+            
+            Assert.AreEqual(send.MessageStatus.Type, StatusType.ERROR);
+        }
+
+        [TestMethod]
+        public void TestSendInvalidEmail()
+        {
+            var recipient = new SMTPRecipient()
+            {
+                To = new List<string>(){"example@gmailcom"}
+            };
+            
+            var send = _sender.SendMessage(
+                recipient,
+                new SMTPMessage<SimpleContent>()
+                {
+                    Content = new SimpleContent()
+                    {
+                        Body = "Body",
+                        Subject = "Subject"
+                    },
+                    MessageTemplate = new StringMessage()
+                },
+                _smtpMailFrom
+            );
+            Assert.AreEqual(send.MessageStatus.Type, StatusType.ERROR);
+        }
+
+        [TestMethod]
         public void TestSMTP()
         {
                 
@@ -116,7 +160,7 @@ namespace MLSMTPLib.Tests
             bool valid = false;
             try
             {
-                MailAddress m = new MailAddress("HELLO WORLD");
+                MailAddress m = new MailAddress("a@example.com");
 
                 valid = true;
             }
