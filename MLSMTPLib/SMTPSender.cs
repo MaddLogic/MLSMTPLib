@@ -65,13 +65,12 @@ namespace MaddLogic.MLSMTPLib
             }
         }
 
-        private bool isValidHTML(string content)
+        public bool isValidHTML(String content)
         {
 
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(content);
-
-            return doc.ParseErrors.Count() > 0;
+            return !doc.ParseErrors.Any();
         }
 
         private SMTPSendMessagesSenderStatus DoSendMessage<T> (
