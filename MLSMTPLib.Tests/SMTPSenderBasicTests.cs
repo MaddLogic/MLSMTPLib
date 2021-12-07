@@ -149,9 +149,10 @@ namespace MLSMTPLib.Tests
             HtmlDocument doc = new HtmlDocument();
             doc.LoadHtml(html);
 
-            bool Error = doc.ParseErrors.Count() > 0;
+            
+            bool error = !doc.ParseErrors.Any();
 
-            Assert.IsFalse(Error);
+            Assert.IsFalse(error);
         }
 
         [TestMethod]
